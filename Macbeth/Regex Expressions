@@ -1,0 +1,36 @@
+Here are the regex expressions I used: 
+
+1. .*(?=^SCENE:) uses positive look ahead to find first place in text where SCENE is listed. Delete all text above SCENE.
+
+Delete everything after -THE END-
+
+2. \n(^\S+\n)
+Replace with $1 (to only delete new line and preserve text)
+
+Looks for newline and next character at beginning of line with no space (one or more) and new line
+
+3. ^\S.*\n
+Replace with \n to preserve formatting
+
+This looks for lines with two or more non-blanks (titles) and everything left justified (any non-space character, anything followed by new line)
+
+4. \s{2,}.*^\s{2}
+
+This looks at any spaces (at least 2 consecutive) and then looks at the beginning of the next line for two or more spaces (to remove large blocks of spaces)
+Replace with \n and 2 spaces so that line beginnings are all same
+
+5. \s{8,}.*
+Replace with \n and 2 spaces
+
+Removes right justified text with "exit" cues for actors
+
+6. (^\s{1,4})[A-Z\s]*\.
+Starting at new line find from 1 to 4 spaces. Then look for capital letter characters, any number followed by any spaces. Also include the . with \.
+Replace with $1 to remove text and maintain spacing
+
+7. (^\s+)[A-Z]{3,}\.?
+Find remaining character names that do not necessarily include . at end
+Replace with $1
+
+8. \[.*\]
+Find asides in []
